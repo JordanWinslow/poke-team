@@ -1,11 +1,12 @@
 import React, { useEffect } from "react"
-import { connect } from "react-redux"
+import { useSelector, useDispatch } from "react-redux" // useSelector grabs state similar to mapStateToProps
 import {
   getFirstRender,
   getPokemonNames,
   getPokemonDetails
-} from "../redux/actions/poke-api"
+} from "../redux/features/pokeAPI/pokeAPISlice"
 
+/******************STYLING****************/
 import { makeStyles } from "@material-ui/core/styles"
 import Box from "@material-ui/core/Box"
 import Grid from "@material-ui/core/Grid"
@@ -16,7 +17,6 @@ import CardActionArea from "@material-ui/core/CardActionArea"
 import CardActions from "@material-ui/core/CardActions"
 import CardContent from "@material-ui/core/CardContent"
 import CardMedia from "@material-ui/core/CardMedia"
-import Typography from "@material-ui/core/Typography"
 import IconButton from "@material-ui/core/IconButton"
 import Button from "@material-ui/core/Button"
 import FavoriteIcon from "@material-ui/icons/Favorite"
@@ -34,16 +34,15 @@ const useStyles = makeStyles({
   }
 })
 
-const PokemonGrid = ({
-  pokeAPI,
-  getFirstRender,
-  getPokemonNames,
-  getPokemonDetails
-}) => {
-  const { pokemon } = pokeAPI
+const PokemonGrid = ({ history }) => {
+  const dispatch = useDispatch() // Prevents us from having to use mapDispatch & connect
+  const { pokemon, nextFetchLink, totalPokemonInPokedex } = useSelector(
+    state => state.pokeAPI
+  ) // Destructure our state from the Redux store using a hook provided by React-Redux
+
   useEffect(() => {
-    if (pokemon.length === 0) {
-      getFirstRender()
+    if (totalPokemonInPokedex === 0) {
+      dispatch(getFirstRender())
     }
   }, []) // only run on first render
   const classes = useStyles() // Material UI
@@ -52,8 +51,8 @@ const PokemonGrid = ({
       <Grid container spacing={6}>
         {pokemon.map(p => {
           return (
-            <Fade in="true">
-              <Grid item xs={12} sm={6} md={4} lg={3} key={p.name}>
+            <Fade in={true} key={p.name}>
+              <Grid item xs={12} sm={6} md={4} lg={3}>
                 <Card className={classes.card} align="center">
                   <CardHeader
                     action={
@@ -63,11 +62,13 @@ const PokemonGrid = ({
                     }
                     title={p.name}
                   />
-                  <CardActionArea>
+                  <CardActionArea
+                    onClick={() => history.push("/pokemon/" + p.name)}
+                  >
                     {p.sprites !== undefined && ( // on first render before details are fetched for each pokemon this will be undefined
                       <CardMedia
                         image={p.sprites.front_default}
-                        title={p.name}
+                        title={`see details on ${p.name}`}
                         className={classes.media}
                       />
                     )}
@@ -90,30 +91,15 @@ const PokemonGrid = ({
             </Fade>
           )
         })}
-        <button onClick={() => getPokemonNames(pokeAPI.nextFetchLink)}>
-          {" "}
-          GET MORE NAMES{" "}
+        <button onClick={() => dispatch(getPokemonNames(nextFetchLink))}>
+          GET MORE NAMES
         </button>
-        <button onClick={() => getPokemonDetails(pokeAPI.pokemon)}>
-          {" "}
-          GET MORE DETAILS{" "}
+        <button onClick={() => dispatch(getPokemonDetails(pokemon))}>
+          GET MORE DETAILS
         </button>
       </Grid>
     </Box>
   )
 }
 
-const mapStateToProps = ({ pokeAPI }) => {
-  return {
-    pokeAPI
-  }
-}
-const mapDispatchToProps = dispatch => {
-  return {
-    getFirstRender: () => dispatch(getFirstRender()),
-    getPokemonNames: nextFetchLink => dispatch(getPokemonNames(nextFetchLink)),
-    getPokemonDetails: pokemon => dispatch(getPokemonDetails(pokemon))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PokemonGrid)
+export default PokemonGrid

@@ -12,7 +12,7 @@ const Header = () => {
       style={{ marginBottom: "3rem", padding: "1rem 0" }}
     >
       <Toolbar>
-        <Typography variant="p" component="h1">
+        <Typography variant="h6" component="h1">
           PokéTeam
         </Typography>
         <IconButton
