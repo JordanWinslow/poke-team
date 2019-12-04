@@ -20,7 +20,7 @@ const pokeAPISlice = createSlice({
     pokemonNames(state, action) {
       const { nextFetchLink, pokemon } = action.payload
       state.nextFetchLink = nextFetchLink
-      state.pokemon.push(pokemon)
+      state.pokemon.push(...pokemon)
     },
     pokemonDetails(state, action) {
       const { index, details } = action.payload // index is the pokemon's location in the array

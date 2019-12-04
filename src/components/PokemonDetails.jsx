@@ -2,9 +2,12 @@ import React from "react"
 
 const PokemonDetails = ({ match, history }) => {
   return (
-    <div id="POKEMONDETAILS">
+    <div id="POKEMONDETAILS" align="center">
       <button onClick={() => history.goBack()}>BACK</button>
-      <p>{match.params.pokemonName}</p>
+      <p align="center">
+        This page will eventually contain information about{" "}
+        {match.params.pokemonName}
+      </p>
     </div>
   )
 }

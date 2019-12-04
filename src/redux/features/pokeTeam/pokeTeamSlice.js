@@ -4,24 +4,27 @@ const pokeTeamSlice = createSlice({
   name: "pokeTeam",
   initialState: {
     pokeTeam: [], // An array of pokemon names (strings) corresponding to each pokemon the user adds to their team
-    favoritePokemon: [] // A non-repeating set of pokemon names (strings) that the user has favorited for later viewing
+    favoritePokemon: [], // A non-repeating set of pokemon names (strings) that the user has favorited for later viewing
+    favoritesMenuActive: false
   },
   reducers: {
     addFavoritePokemon(state, action) {
-      if (!state.favoritePokemon.has(action.payload)) {
-        state.favoritePokemon.add(action.payload) // add the string value of the pokemon's name to the set
-      }
+      state.favoritePokemon.push(action.payload)
     },
     removeFavoritePokemon(state, action) {
-      state.favoritePokemon.delete(action.payload)
+      state.favoritePokemon.splice(
+        state.favoritePokemon.indexOf(action.payload),
+        1
+      )
+    },
+    toggleFavoritePokemonMenu(state) {
+      state.favoritesMenuActive = !state.favoritesMenuActive
     },
     addToTeam(state, action) {
-      if (!state.favoritePokemon.has(action.payload)) {
-        state.pokeTeam.add(action.payload) // add the string value of the pokemon's name to the set
-      }
+      state.pokeTeam.push(action.payload) // add the string value of the pokemon's name to the set
     },
     removeFromTeam(state, action) {
-      state.pokeTeam.delete(action.payload)
+      state.pokeTeam.splice(state.pokeTeam.indexOf(action.payload), 1)
     }
   }
 })
@@ -32,5 +35,6 @@ export const {
   addFavoritePokemon,
   removeFavoritePokemon,
   addToTeam,
-  removeFromTeam
+  removeFromTeam,
+  toggleFavoritePokemonMenu
 } = pokeTeamSlice.actions
