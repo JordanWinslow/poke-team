@@ -26,6 +26,7 @@ const pokeAPISlice = createSlice({
       const { index, details } = action.payload // index is the pokemon's location in the array
       state.pokemon[index] = { ...state.pokemon[index], ...details } // add all the associated details of the pokemon from the API to the state
     },
+    // SOME SEARCH REDUCER SHOULD GO HERE
     apiError(state, action) {
       const { message } = action.payload
       alert(message)
@@ -121,6 +122,7 @@ export const getPokemonDetails = pokemon => {
 }
 
 export const searchPokemon = pokemonName => {
+  console.log("SEARCH POKEMON DISPATCHED: ", pokemonName)
   return async dispatch => {
     try {
       const apiResponse = await fetch(
@@ -128,7 +130,8 @@ export const searchPokemon = pokemonName => {
       )
       const pokemonDetails = await apiResponse.json()
       const pokemonIndex = pokemonDetails.id
-      dispatch(pokemonDetails({ pokemonIndex, pokemonDetails }))
+      console.log(pokemonDetails, pokemonIndex)
+      // some dispatch() should go here, to line 29 above
     } catch (e) {
       apiError(e.message)
     }
