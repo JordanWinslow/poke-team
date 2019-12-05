@@ -119,3 +119,18 @@ export const getPokemonDetails = pokemon => {
     }
   }
 }
+
+export const searchPokemon = pokemonName => {
+  return async dispatch => {
+    try {
+      const apiResponse = await fetch(
+        `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
+      )
+      const pokemonDetails = await apiResponse.json()
+      const pokemonIndex = pokemonDetails.id
+      dispatch(pokemonDetails({ pokemonIndex, pokemonDetails }))
+    } catch (e) {
+      apiError(e.message)
+    }
+  }
+}
