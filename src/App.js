@@ -11,10 +11,20 @@ const App = () => {
   return (
     <div className="App">
       <Route path="/" component={Header} />
-      <Route path="/search" component={SearchBar} />
-      <Route path="/" component={PokemonGrid} />
-      <Route path="/pokemon/:pokemonName" component={PokemonDetails} />
-      <Route path="/favorites" component={ListFavoritePokemon} />
+      <Route
+        path="/search"
+        component={SearchBar /*OVERLAYS CONTENT ABOVE EVERYTHING ELSE*/}
+      />
+      <Route
+        path="/favorites"
+        component={
+          ListFavoritePokemon /*OVERLAYS CONTENT ABOVE EVERYTHING ELSE*/
+        }
+      />
+      <Switch>
+        <Route path="/pokemon/:pokemonName" component={PokemonDetails} />
+        <Route path="/" component={PokemonGrid} />
+      </Switch>
       <Route path="/" component={BottomNav} />
     </div>
   )
