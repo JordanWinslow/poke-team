@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux" // useSelector grabs state similar to mapStateToProps
 import {
   addFavoritePokemon,
@@ -9,6 +10,7 @@ import {
 
 /**********BEGIN STYLING********/
 import { makeStyles } from "@material-ui/core/styles"
+import Fab from "@material-ui/core/Fab"
 import Box from "@material-ui/core/Box"
 import Grid from "@material-ui/core/Grid"
 import Chip from "@material-ui/core/Chip"
@@ -21,6 +23,7 @@ import CardMedia from "@material-ui/core/CardMedia"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
 import Fade from "@material-ui/core/Fade"
+import BackIcon from "@material-ui/icons/ArrowBack"
 /**********END STYLING********/
 
 import pokemonTypeColors from "../data/pokemonTypeColors"
@@ -34,7 +37,8 @@ const useStyles = makeStyles({
   },
   card: {
     width: "95%", // on small screens only
-    maxWidth: "60rem"
+    maxWidth: "60rem",
+    backgroundColor: "rgba(255, 255, 255, 0.96)"
   },
   media: {
     height: 200,
@@ -48,6 +52,12 @@ const useStyles = makeStyles({
     color: "rgb(240, 240, 240)",
     backgroundColor: "rgba(0, 0, 0, 0.7)",
     borderRadius: 0
+  },
+  backButton: {
+    position: "fixed",
+    left: "5%",
+    top: "5%",
+    zIndex: "1100"
   }
 })
 
@@ -74,7 +84,7 @@ const PokemonDetails = ({ match, history }) => {
   } = pokemonDetails
 
   const matchPokemonColor = {
-    position: "absolute",
+    position: "fixed",
     zIndex: "-1",
     right: "10%",
     top: "10%",
@@ -84,9 +94,18 @@ const PokemonDetails = ({ match, history }) => {
     backgroundColor: color.name
   }
 
-  console.log(color, habitat, description, capture_rate, stats)
+  console.log(abilities, color, habitat, description, capture_rate, stats)
   return (
-    <div id="POKEMONDETAILS" align="center" style={{ margin: "3rem 0" }}>
+    <div
+      id="POKEMONDETAILS"
+      align="center"
+      style={{ margin: "3rem 0", overflowX: "hidden" }}
+    >
+      <Link to="/">
+        <Fab color="primary" aria-label="add" className={classes.backButton}>
+          <BackIcon />
+        </Fab>
+      </Link>
       {/* These two colored circles are themed to the pokemon to make the content more interesting */}
       <div id="ColoredCircle1" style={matchPokemonColor} />
       <div
@@ -145,13 +164,13 @@ const PokemonDetails = ({ match, history }) => {
             {/******BEGIN POKEMON DESCRIPTION SECTION******/}
             <Card className={classes.pokemonDescription} align="left">
               <CardContent>
-                <Typography variant="h3" component="h1" gutterBottom>
+                <Typography variant="h4" component="h1" gutterBottom>
                   {capitalizeFirstLetter(name)}
                 </Typography>
                 <Typography gutterBottom>
-                  <strong>ID:</strong> {id}
-                </Typography>
-                <Typography>
+                  <span style={{ marginRight: "1rem" }}>
+                    <strong>ID:</strong> {id}
+                  </span>
                   <span style={{ marginRight: "1rem" }}>
                     <strong>Height:</strong> {height}{" "}
                   </span>
@@ -159,8 +178,18 @@ const PokemonDetails = ({ match, history }) => {
                     <strong>Weight:</strong> {weight}
                   </span>
                 </Typography>
+                <Typography gutterBottom>
+                  <div>
+                    <strong>Abilities:</strong>
+                    {abilities.map(ability => (
+                      <Typography variant="button" component="p">
+                        {ability.ability.name}
+                      </Typography>
+                    ))}
+                  </div>
+                </Typography>
                 <br />
-                <Typography variant="body2" component="p">
+                <Typography variant="body1" component="p">
                   {description.flavor_text}
                 </Typography>
               </CardContent>
