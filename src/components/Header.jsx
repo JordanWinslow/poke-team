@@ -7,7 +7,7 @@ import GitHubIcon from "@material-ui/icons/GitHub"
 
 const Header = () => {
   return (
-    <AppBar position="relative" style={{ padding: "1rem 0" }}>
+    <AppBar position="relative">
       <Toolbar>
         <Typography variant="h6" component="h1">
           PokéTeam
