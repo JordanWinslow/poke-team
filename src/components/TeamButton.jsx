@@ -7,7 +7,7 @@ const TeamButton = ({ onTeam, onClick }) => {
   return (
     <Button
       variant="text"
-      color="primary"
+      color={onTeam ? "primary" : "secondary"}
       startIcon={onTeam ? <RemoveCircleIcon /> : <AddCircleIcon />}
       aria-label={onTeam ? "Remove From Team" : "Add to Team"}
       onClick={onClick}

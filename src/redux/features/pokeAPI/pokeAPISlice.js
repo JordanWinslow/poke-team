@@ -115,11 +115,15 @@ export const getPokemonDetails = pokemon => {
           const description = flavor_text_entries.find(
             flavor => flavor.language.name === "en"
           )
+          let modifiedHeight = height * 0.328084 // API doesn't include feet and inches punctuation so we create it here
+          modifiedHeight = Math.round(modifiedHeight) + "'"
+          let modifiedWeight = weight * 0.2204623
+          modifiedWeight = Math.round(modifiedWeight) + " lbs" // API doesn't format weight so we must do it here
           const details = {
             id,
             abilities,
-            height,
-            weight,
+            height: modifiedHeight,
+            weight: modifiedWeight,
             sprites,
             stats,
             types,

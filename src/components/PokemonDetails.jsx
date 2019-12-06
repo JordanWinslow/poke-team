@@ -19,6 +19,7 @@ import CardContent from "@material-ui/core/CardContent"
 import CardMedia from "@material-ui/core/CardMedia"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
+import ButtonGroup from "@material-ui/core/ButtonGroup"
 import BackIcon from "@material-ui/icons/ArrowBack"
 /**********END STYLING********/
 
@@ -26,6 +27,7 @@ import pokemonTypeColors from "../data/pokemonTypeColors"
 import capitalizeFirstLetter from "../util/capitalizeFirstLetter"
 import TeamButton from "./TeamButton"
 import FavoriteButton from "./FavoriteButton"
+import { Divider } from "@material-ui/core"
 
 const useStyles = makeStyles({
   grid: {
@@ -51,8 +53,8 @@ const useStyles = makeStyles({
   },
   backButton: {
     position: "fixed",
-    left: "5%",
-    top: "5%",
+    left: ".5rem",
+    top: ".5%",
     zIndex: "1100"
   }
 })
@@ -95,10 +97,14 @@ const PokemonDetails = ({ match, history }) => {
     <div
       id="POKEMONDETAILS"
       align="center"
-      style={{ margin: "3rem 0", overflowX: "hidden" }}
+      style={{ margin: "2rem 0 5rem 0", overflowX: "hidden" }}
     >
       <Link to="/">
-        <Fab color="primary" aria-label="add" className={classes.backButton}>
+        <Fab
+          color="secondary"
+          aria-label="back to homepage"
+          className={classes.backButton}
+        >
           <BackIcon />
         </Fab>
       </Link>
@@ -168,32 +174,48 @@ const PokemonDetails = ({ match, history }) => {
                     <strong>ID:</strong> {id}
                   </span>
                   <span style={{ marginRight: "1rem" }}>
-                    <strong>Height:</strong> {height}{" "}
+                    <strong>Height:</strong> {height}
                   </span>
                   <span>
                     <strong>Weight:</strong> {weight}
                   </span>
                 </Typography>
                 <Typography gutterBottom>
-                  <div>
-                    <strong>Abilities:</strong>
-                    {abilities.map(ability => (
-                      <Typography variant="button" component="p">
-                        {ability.ability.name}
-                      </Typography>
-                    ))}
-                  </div>
+                  <strong>Habitat:</strong>{" "}
+                  {capitalizeFirstLetter(habitat.name)}
                 </Typography>
-                <br />
-                <Typography variant="body1" component="p">
+                <Typography
+                  variant="body1"
+                  component="p"
+                  style={{
+                    margin: ".8rem 0",
+                    padding: "1rem",
+                    border: `1px solid ${color.name}`,
+                    borderRadius: "5px"
+                  }}
+                >
                   {description.flavor_text}
                 </Typography>
+                <Typography gutterBottom>
+                  <strong>Abilities:</strong>
+                </Typography>
+                <Typography style={{ marginBottom: "1rem" }}>
+                  {abilities.map(ability => (
+                    <Button
+                      variant="outlined"
+                      style={{
+                        borderColor: color.name,
+                        color: "white",
+                        marginRight: ".5rem"
+                      }}
+                      aria-label="Pokemon Abilities"
+                      key={ability.ability.name}
+                    >
+                      {ability.ability.name}
+                    </Button>
+                  ))}
+                </Typography>
               </CardContent>
-              <CardActions>
-                <Button size="small" color="secondary">
-                  Learn More
-                </Button>
-              </CardActions>
             </Card>
           </Grid>
         </Grid>
