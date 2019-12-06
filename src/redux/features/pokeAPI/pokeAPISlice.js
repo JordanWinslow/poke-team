@@ -91,7 +91,7 @@ export const getPokemonDetails = pokemon => {
       pokemon.forEach(async (currentPokemon, index) => {
         if (currentPokemon.id === undefined) {
           // if it does not have an ID then it hasn't been fetched yet
-          const apiResponse = await fetch(
+          const primaryDetailsRequest = await fetch(
             "https://pokeapi.co/api/v2/pokemon/" + currentPokemon.name
           )
           const {
@@ -102,7 +102,19 @@ export const getPokemonDetails = pokemon => {
             sprites,
             stats,
             types
-          } = await apiResponse.json()
+          } = await primaryDetailsRequest.json()
+          const speciesInfoRequest = await fetch(
+            "https://pokeapi.co/api/v2/pokemon-species/" + currentPokemon.name
+          )
+          const {
+            capture_rate,
+            color,
+            habitat,
+            flavor_text_entries
+          } = await speciesInfoRequest.json()
+          const description = flavor_text_entries.find(
+            flavor => flavor.language.name === "en"
+          )
           const details = {
             id,
             abilities,
@@ -110,7 +122,11 @@ export const getPokemonDetails = pokemon => {
             weight,
             sprites,
             stats,
-            types
+            types,
+            capture_rate,
+            color,
+            habitat,
+            description
           }
           dispatch(pokemonDetails({ index, details }))
         }

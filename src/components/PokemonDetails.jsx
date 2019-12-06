@@ -33,9 +33,8 @@ const useStyles = makeStyles({
     alignItems: "center"
   },
   card: {
-    width: "85%",
-    padding: "0 1rem",
-    marginBottom: "6rem"
+    width: "95%", // on small screens only
+    maxWidth: "60rem"
   },
   media: {
     height: 200,
@@ -48,7 +47,7 @@ const useStyles = makeStyles({
   pokemonDescription: {
     color: "rgb(240, 240, 240)",
     backgroundColor: "rgba(0, 0, 0, 0.7)",
-    maxWidth: "25rem"
+    borderRadius: 0
   }
 })
 
@@ -57,9 +56,7 @@ const PokemonDetails = ({ match, history }) => {
   const name = match.params.pokemonName
   const dispatch = useDispatch() // Prevents us from having to use mapDispatch & connect
   // Destructure our state from the Redux store using a hook provided by React-Redux
-  const { pokemon, nextFetchLink, totalPokemonInPokedex } = useSelector(
-    state => state.pokeAPI
-  )
+  const { pokemon } = useSelector(state => state.pokeAPI)
   const { pokeTeam, favoritePokemon } = useSelector(state => state.pokeTeam)
   const pokemonDetails = pokemon.find(p => p.name === name)
   const {
@@ -69,11 +66,33 @@ const PokemonDetails = ({ match, history }) => {
     weight,
     sprites,
     stats,
-    types
+    types,
+    capture_rate,
+    color,
+    habitat,
+    description
   } = pokemonDetails
 
+  const matchPokemonColor = {
+    position: "absolute",
+    zIndex: "-1",
+    right: "10%",
+    top: "10%",
+    width: "300px",
+    height: "300px",
+    borderRadius: "100%",
+    backgroundColor: color.name
+  }
+
+  console.log(color, habitat, description, capture_rate, stats)
   return (
-    <div id="POKEMONDETAILS" align="center">
+    <div id="POKEMONDETAILS" align="center" style={{ margin: "3rem 0" }}>
+      {/* These two colored circles are themed to the pokemon to make the content more interesting */}
+      <div id="ColoredCircle1" style={matchPokemonColor} />
+      <div
+        id="ColoredCircle2"
+        style={{ ...matchPokemonColor, left: "10%", top: "60%" }}
+      />
       <Card className={classes.card}>
         <CardActions className={classes.topButtons}>
           <TeamButton
@@ -93,10 +112,8 @@ const PokemonDetails = ({ match, history }) => {
             }
           />
         </CardActions>
-        <CardHeader title={capitalizeFirstLetter(name)} />
-
         <Grid container spacing={1} className={classes.grid}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             {/******BEGIN POKEMON IMAGE SECTION******/}
             <CardMedia
               image={sprites.front_default}
@@ -124,10 +141,13 @@ const PokemonDetails = ({ match, history }) => {
             </CardContent>
             {/******END POKEMON TYPES SECTION******/}
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             {/******BEGIN POKEMON DESCRIPTION SECTION******/}
             <Card className={classes.pokemonDescription} align="left">
               <CardContent>
+                <Typography variant="h3" component="h1" gutterBottom>
+                  {capitalizeFirstLetter(name)}
+                </Typography>
                 <Typography gutterBottom>
                   <strong>ID:</strong> {id}
                 </Typography>
@@ -141,8 +161,7 @@ const PokemonDetails = ({ match, history }) => {
                 </Typography>
                 <br />
                 <Typography variant="body2" component="p">
-                  Ivysaur is a really cool dude. He likes grass, is mainly made
-                  of grass, and also smokes grass.
+                  {description.flavor_text}
                 </Typography>
               </CardContent>
               <CardActions>

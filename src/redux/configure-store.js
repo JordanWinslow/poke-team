@@ -9,7 +9,7 @@ import {
   REGISTER
 } from "redux-persist"
 
-import rootReducer from "./reducers/root-reducer"
+import rootReducer from "./root-reducer"
 
 const configStore = () => {
   const store = configureStore({

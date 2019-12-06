@@ -2,8 +2,8 @@ import { combineReducers } from "@reduxjs/toolkit"
 import { persistReducer } from "redux-persist"
 import storage from "localforage"
 
-import pokeAPI from "../features/pokeAPI/pokeAPISlice"
-import pokeTeam from "../features/pokeTeam/pokeTeamSlice"
+import pokeAPI from "./features/pokeAPI/pokeAPISlice"
+import pokeTeam from "./features/pokeTeam/pokeTeamSlice"
 
 const persistConfig = {
   key: "root",
