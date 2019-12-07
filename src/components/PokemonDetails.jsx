@@ -99,7 +99,7 @@ const PokemonDetails = ({ match, history }) => {
       align="center"
       style={{ margin: "2rem 0 5rem 0", overflowX: "hidden" }}
     >
-      <Link to="/">
+      <Link to={{ pathname: "/", state: name }}>
         <Fab
           color="secondary"
           aria-label="back to homepage"

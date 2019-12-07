@@ -43,7 +43,7 @@ const useStyles = makeStyles({
   }
 })
 
-const PokemonGrid = ({ history }) => {
+const PokemonGrid = ({ history, location }) => {
   const dispatch = useDispatch() // Prevents us from having to use mapDispatch & connect
   // Destructure our state from the Redux store using a hook provided by React-Redux
   const { pokemon, nextFetchLink, totalPokemonInPokedex } = useSelector(
@@ -54,6 +54,16 @@ const PokemonGrid = ({ history }) => {
   useEffect(() => {
     if (totalPokemonInPokedex === 0) {
       dispatch(getFirstRender())
+    }
+    if (location.state) {
+      /* 
+      IF THE USER WAS LOOKING AT POKEMON DETAILS AND THEY CLICK BACK, WE WANT IT TO SCROLL TO THE POKEMON THEY WERE LOOKING AT INSTEAD OF STARTING AT THE TOP OF THE PAGE.
+      BY PASSING AN OBJECT WITH A <Link> COMPONENT INSTEAD OF JUST A PATH, WE CAN SEND THIS COMPONENT THE NAME OF THE POKEMON THEY WERE LOOKING AT.
+      WE CAN THEN USE THAT NAME TO SELECT THE APPROPRIATE ID CORRESPONDING TO THE GRID ITEM WITH THE POKEMON THEY WERE LOOKING AT, AND USE 
+      scrollIntoView() TO AUTOMATICALLY SCROLL THERE!
+      */
+      const pokemonLocation = location.state
+      document.getElementById(pokemonLocation).scrollIntoView()
     }
   }, []) // only run on first render
   const classes = useStyles() // Material UI
@@ -66,7 +76,7 @@ const PokemonGrid = ({ history }) => {
           return (
             <Fade in={true} key={p.name}>
               <Grid item xs={12} sm={6} md={4} lg={3}>
-                <Card className={classes.card} align="center">
+                <Card id={p.name} className={classes.card} align="center">
                   <CardHeader
                     action={
                       <FavoriteButton

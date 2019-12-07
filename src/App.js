@@ -15,14 +15,14 @@ const App = () => {
         path="/search"
         component={SearchBar /*OVERLAYS CONTENT ABOVE EVERYTHING ELSE*/}
       />
-      <Route
-        path="/favorites"
-        component={
-          ListFavoritePokemon /*OVERLAYS CONTENT ABOVE EVERYTHING ELSE*/
-        }
-      />
       <Switch>
         <Route path="/pokemon/:pokemonName" component={PokemonDetails} />
+        <Route
+          path="/favorites"
+          component={
+            ListFavoritePokemon /*OVERLAYS CONTENT ABOVE EVERYTHING ELSE*/
+          }
+        />
         <Route path="/" component={PokemonGrid} />
       </Switch>
       <Route path="/" component={BottomNav} />
