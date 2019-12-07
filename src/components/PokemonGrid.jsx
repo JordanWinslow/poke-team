@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import { useInView } from "react-intersection-observer" // to set up infinite scrolling
 import { useSelector, useDispatch } from "react-redux" // useSelector grabs state similar to mapStateToProps
 import {
   getFirstRender,
@@ -22,7 +23,6 @@ import Chip from "@material-ui/core/Chip"
 import Card from "@material-ui/core/Card"
 import CardHeader from "@material-ui/core/CardHeader"
 import CardActionArea from "@material-ui/core/CardActionArea"
-import CardActions from "@material-ui/core/CardActions"
 import CardContent from "@material-ui/core/CardContent"
 import CardMedia from "@material-ui/core/CardMedia"
 import Fade from "@material-ui/core/Fade"
@@ -66,7 +66,13 @@ const PokemonGrid = ({ history, location }) => {
       document.getElementById(pokemonLocation).scrollIntoView()
     }
   }, []) // only run on first render
+
   const classes = useStyles() // Material UI
+
+  const [bottomRef, bottomInView] = useInView({
+    // FOR CALCULATING END OF PAGE AND LOADING MORE POKEMON
+    triggerOnce: false
+  })
 
   return (
     <Box width="80%" margin="3rem auto">
@@ -116,6 +122,7 @@ const PokemonGrid = ({ history, location }) => {
                               }}
                               size="medium"
                               label={p.type.name}
+                              key={p.type.name}
                             />
                           )
                         })}
@@ -135,6 +142,10 @@ const PokemonGrid = ({ history, location }) => {
                   />
                   {/******END CARD FOOTER SECTION******/}
                 </Card>
+                <div ref={bottomRef}>
+                  {bottomInView &&
+                    console.log("BOTTOM OF PAGE REACHED") /*TODO*/}
+                </div>
               </Grid>
             </Fade>
           )

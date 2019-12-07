@@ -29,10 +29,7 @@ const useDebounce = (func, delay) => {
 const SearchBar = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const [searchText, setSearchText] = useState("")
-
   const updateText = useDebounce(text => {
-    setSearchText(text.toLowerCase())
     dispatch(searchPokemon(text.toLowerCase()))
   }, 1300) // dispatch API request with updated search text 1.3 seconds after they stop typing
 

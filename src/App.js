@@ -11,10 +11,10 @@ const App = () => {
   return (
     <div className="App">
       <Route path="/" component={Header} />
-      <Route
+      {/*<Route
         path="/search"
-        component={SearchBar /*OVERLAYS CONTENT ABOVE EVERYTHING ELSE*/}
-      />
+        component={SearchBar} OVERLAYS CONTENT ABOVE EVERYTHING ELSE
+      />*/}
       <Switch>
         <Route path="/pokemon/:pokemonName" component={PokemonDetails} />
         <Route

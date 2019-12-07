@@ -140,6 +140,12 @@ export const getPokemonDetails = pokemon => {
     }
   }
 }
+export const getMorePokemon = nextFetchLink => {
+  return async dispatch => {
+    await dispatch(getPokemonNames(nextFetchLink))
+    await dispatch(getPokemonDetails())
+  }
+}
 
 export const searchPokemon = pokemonName => {
   console.log("SEARCH POKEMON DISPATCHED: ", pokemonName)

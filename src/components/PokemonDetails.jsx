@@ -19,7 +19,6 @@ import CardContent from "@material-ui/core/CardContent"
 import CardMedia from "@material-ui/core/CardMedia"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
-import ButtonGroup from "@material-ui/core/ButtonGroup"
 import BackIcon from "@material-ui/icons/ArrowBack"
 /**********END STYLING********/
 
@@ -27,7 +26,6 @@ import pokemonTypeColors from "../data/pokemonTypeColors"
 import capitalizeFirstLetter from "../util/capitalizeFirstLetter"
 import TeamButton from "./TeamButton"
 import FavoriteButton from "./FavoriteButton"
-import { Divider } from "@material-ui/core"
 
 const useStyles = makeStyles({
   grid: {
@@ -91,8 +89,6 @@ const PokemonDetails = ({ match, history }) => {
     borderRadius: "100%",
     backgroundColor: color.name
   }
-
-  console.log(abilities, color, habitat, description, capture_rate, stats)
   return (
     <div
       id="POKEMONDETAILS"
@@ -156,6 +152,7 @@ const PokemonDetails = ({ match, history }) => {
                     }}
                     size="medium"
                     label={p.type.name}
+                    key={p.type.name}
                   />
                 )
               })}
