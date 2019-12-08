@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from "react"
+import React from "react"
 import { useDispatch } from "react-redux"
-import debounce from "lodash/debounce"
 
+import useDebounce from "../util/useDebounce"
 import { searchPokemon } from "../redux/features/pokeAPI/pokeAPISlice"
 
 import { makeStyles } from "@material-ui/core/styles"
@@ -20,11 +20,6 @@ const useStyles = makeStyles({
     borderRadius: "10px"
   }
 })
-
-// CREATE A CUSTOM HOOK TO DEBOUNCE OUR INPUT SO API REQUEST ISN'T SENT ON EVERY KEYSTROKE
-const useDebounce = (func, delay) => {
-  return useCallback(debounce(func, delay), [])
-}
 
 const SearchBar = () => {
   const classes = useStyles()

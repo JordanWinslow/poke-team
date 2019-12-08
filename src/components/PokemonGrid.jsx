@@ -1,10 +1,9 @@
 import React, { useEffect } from "react"
-import { useInView } from "react-intersection-observer" // to set up infinite scrolling
+import { InView } from "react-intersection-observer" // to set up infinite scrolling
 import { useSelector, useDispatch } from "react-redux" // useSelector grabs state similar to mapStateToProps
 import {
   getFirstRender,
-  getPokemonNames,
-  getPokemonDetails
+  getMorePokemon
 } from "../redux/features/pokeAPI/pokeAPISlice"
 import {
   addFavoritePokemon,
@@ -12,6 +11,8 @@ import {
   removeFavoritePokemon,
   removeFromTeam
 } from "../redux/features/pokeTeam/pokeTeamSlice"
+
+import useDebounce from "../util/useDebounce"
 
 import TeamButton from "./TeamButton" // Add and Remove From Team Button
 
@@ -32,23 +33,29 @@ import pokemonTypeColors from "../data/pokemonTypeColors" // for displaying the 
 import capitalizeFirstLetter from "../util/capitalizeFirstLetter"
 import FavoriteButton from "./FavoriteButton"
 
+import Loading from "../images/Loading.gif"
+import Loading2 from "../images/Loading2.gif"
+
 const useStyles = makeStyles({
   card: {
     maxWidth: 400,
     margin: "auto"
   },
   media: {
-    height: 200,
-    width: 200
+    height: 150,
+    width: 150
   }
 })
 
 const PokemonGrid = ({ history, location }) => {
   const dispatch = useDispatch() // Prevents us from having to use mapDispatch & connect
   // Destructure our state from the Redux store using a hook provided by React-Redux
-  const { pokemon, nextFetchLink, totalPokemonInPokedex } = useSelector(
-    state => state.pokeAPI
-  )
+  const {
+    loading,
+    pokemon,
+    nextFetchLink,
+    totalPokemonInPokedex
+  } = useSelector(state => state.pokeAPI)
   const { pokeTeam, favoritePokemon } = useSelector(state => state.pokeTeam)
 
   useEffect(() => {
@@ -69,14 +76,17 @@ const PokemonGrid = ({ history, location }) => {
 
   const classes = useStyles() // Material UI
 
-  const [bottomRef, bottomInView] = useInView({
-    // FOR CALCULATING END OF PAGE AND LOADING MORE POKEMON
-    triggerOnce: false
-  })
+  const getPokemon = useDebounce(link => {
+    console.log("BOTTOM OF PAGE REACHED.\nGETTING MORE POKEMON")
+    dispatch(getMorePokemon(link))
+  }, 1000) // prevent 20 API requests by debouncing and dispatch only one API request each time we hit bottom of page
 
   return (
-    <Box width="80%" margin="3rem auto">
-      <Grid container spacing={6}>
+    <Box
+      width="80%"
+      margin={window.innerWidth < 500 ? "2rem auto" : "3rem auto"}
+    >
+      <Grid container spacing={window.innerWidth < 500 ? 2 : 6}>
         {/******BEGIN MAPPING POKEMON TO GRID CARDS******/}
         {pokemon.map(p => {
           return (
@@ -103,7 +113,7 @@ const PokemonGrid = ({ history, location }) => {
                   >
                     {p.sprites !== undefined && ( // on first render before details are fetched for each pokemon this will be undefined and we will omit rendering the sprites and types sections below
                       <CardMedia
-                        image={p.sprites.front_default}
+                        image={loading ? Loading2 : p.sprites.front_default}
                         title={`see details on ${p.name}`}
                         className={classes.media}
                       />
@@ -142,10 +152,6 @@ const PokemonGrid = ({ history, location }) => {
                   />
                   {/******END CARD FOOTER SECTION******/}
                 </Card>
-                <div ref={bottomRef}>
-                  {bottomInView &&
-                    console.log("BOTTOM OF PAGE REACHED") /*TODO*/}
-                </div>
               </Grid>
             </Fade>
           )
@@ -159,12 +165,24 @@ const PokemonGrid = ({ history, location }) => {
             marginBottom: "3rem"
           }}
         >
-          <button onClick={() => dispatch(getPokemonNames(nextFetchLink))}>
-            GET MORE NAMES
-          </button>
-          <button onClick={() => dispatch(getPokemonDetails(pokemon))}>
-            GET MORE DETAILS
-          </button>
+          {!loading && ( // if state.loading is active, we are performing API requests and do not want this component to trigger or display.
+            // otherwise it will continually load pokemon from the API even if the user isn't at the bottom of the page.
+            <InView
+              as="div"
+              onChange={inView => {
+                if (inView) {
+                  // this is a property of the react-intersection-observer library and prevents this component from triggering except when it is fully in view.
+                  getPokemon(nextFetchLink)
+                }
+              }}
+            >
+              <img
+                src={Loading}
+                alt="Mew Loading Animation"
+                style={{ width: "200px" }}
+              />
+            </InView>
+          )}
         </div>
       </Grid>
     </Box>
