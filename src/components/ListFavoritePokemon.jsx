@@ -26,9 +26,6 @@ const ListFavoritePokemon = ({ history }) => {
   const getAvatar = name => {
     return pokemon.find(p => p.name === name).sprites.front_default
   }
-  const getTypes = name => {
-    return pokemon.find(p => p.name === name).types
-  }
   return (
     <Box
       style={{
@@ -71,7 +68,8 @@ const ListFavoritePokemon = ({ history }) => {
                   display: "flex",
                   justifyContent: "space-around",
                   alignItems: "center",
-                  boxShadow: "0 0 1px rgba(0, 0, 0, 0.5)"
+                  boxShadow: "0 0 1px rgba(0, 0, 0, 0.5)",
+                  width: "100%"
                 }}
               >
                 <Avatar
