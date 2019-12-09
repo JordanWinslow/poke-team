@@ -64,48 +64,58 @@ const ListFavoritePokemon = ({ history }) => {
             title="Favorite Pokemon"
           />
           <Grid container>
-            {favoritePokemon.map(name => (
-              <Grid
-                item
-                sm={12}
-                md={6}
-                style={{
-                  padding: "1rem",
-                  height: "6rem",
-                  display: "flex",
-                  justifyContent: "space-around",
-                  alignItems: "center",
-                  boxShadow: "0 0 1px rgba(0, 0, 0, 0.5)",
-                  width: "100%"
-                }}
-                key={name}
-              >
-                <Avatar
-                  style={{
-                    height: "4rem",
-                    width: "4rem",
-                    cursor: "pointer"
-                  }}
-                  src={getAvatar(name)}
-                  className="fullSizeAvatar" // index.css
-                  alt={name}
-                  onClick={() => history.push("/pokemon/" + name)}
-                ></Avatar>
-                <Typography
-                  variant="h6"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => history.push("/pokemon/" + name)}
-                >
-                  {capitalizeFirstLetter(name)}
+            {favoritePokemon.length === 0 ? (
+              // DISPLAY THIS IF NO POKEMON ARE FAVORITED
+              <Grid item style={{ margin: "25%" }}>
+                <Typography variant="h5" component="h2">
+                  You Have Not Favorited Any Pokemon Yet.
                 </Typography>
-                {/*secondary={/*types*/}
-                <FavoriteButton
-                  isFavorited={true}
-                  onClick={() => dispatch(removeFavoritePokemon(name))}
-                  aria-label="remove pokemon from favorites"
-                />
               </Grid>
-            ))}
+            ) : (
+              // DISPLAY THIS IF THERE ARE ANY POKEMON IN THE LIST
+              favoritePokemon.map(name => (
+                <Grid
+                  item
+                  sm={12}
+                  md={6}
+                  style={{
+                    padding: "1rem",
+                    height: "6rem",
+                    display: "flex",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                    boxShadow: "0 0 1px rgba(0, 0, 0, 0.5)",
+                    width: "100%"
+                  }}
+                  key={name}
+                >
+                  <Avatar
+                    style={{
+                      height: "4rem",
+                      width: "4rem",
+                      cursor: "pointer"
+                    }}
+                    src={getAvatar(name)}
+                    className="fullSizeAvatar" // index.css
+                    alt={name}
+                    onClick={() => history.push("/pokemon/" + name)}
+                  ></Avatar>
+                  <Typography
+                    variant="h6"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => history.push("/pokemon/" + name)}
+                  >
+                    {capitalizeFirstLetter(name)}
+                  </Typography>
+                  {/*secondary={/*types*/}
+                  <FavoriteButton
+                    isFavorited={true}
+                    onClick={() => dispatch(removeFavoritePokemon(name))}
+                    aria-label="remove pokemon from favorites"
+                  />
+                </Grid>
+              ))
+            )}
           </Grid>
         </Card>
       </Grid>
