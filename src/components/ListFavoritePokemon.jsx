@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 
 import {
@@ -41,17 +41,24 @@ const ListFavoritePokemon = ({ history }) => {
     >
       <Grid
         id="FavoritesList"
-        container
+        item
         sm={12}
         md={8}
         lg={6}
-        style={{ overflowY: "scroll", margin: "3rem 0" }}
+        style={{
+          overflowY: "scroll",
+          margin: "3rem 0",
+          boxShadow: "0 0px 20px rgba(0, 0, 0, 0.5)"
+        }}
       >
         <Card>
           <CardHeader
             action={
-              <IconButton aria-label="close favorites menu">
-                <CloseIcon onClick={() => history.goBack()} />
+              <IconButton
+                aria-label="close favorites menu"
+                onClick={() => history.goBack()}
+              >
+                <CloseIcon />
               </IconButton>
             }
             title="Favorite Pokemon"
@@ -71,6 +78,7 @@ const ListFavoritePokemon = ({ history }) => {
                   boxShadow: "0 0 1px rgba(0, 0, 0, 0.5)",
                   width: "100%"
                 }}
+                key={name}
               >
                 <Avatar
                   style={{

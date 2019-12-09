@@ -72,7 +72,7 @@ const PokemonGrid = ({ history, location }) => {
       const pokemonLocation = location.state
       document.getElementById(pokemonLocation).scrollIntoView()
     }
-  }, []) // only run on first render
+  }, [location.state]) // only run on first render
 
   const classes = useStyles() // Material UI
 

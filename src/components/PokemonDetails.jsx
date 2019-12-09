@@ -71,7 +71,7 @@ const PokemonDetails = ({ match, history }) => {
     height,
     weight,
     sprites,
-    stats,
+    // stats, - Lots of info here, would require a chart of some sort to display properly
     types,
     capture_rate,
     color,
@@ -177,9 +177,13 @@ const PokemonDetails = ({ match, history }) => {
                     <strong>Weight:</strong> {weight}
                   </span>
                 </Typography>
-                <Typography gutterBottom>
+                <Typography gutterBottom style={{ marginRight: "1rem" }}>
                   <strong>Habitat:</strong>{" "}
                   {capitalizeFirstLetter(habitat.name)}
+                </Typography>
+                <Typography gutterBottom style={{ whiteSpace: "nowrap" }}>
+                  <strong>Capture Rate:</strong>{" "}
+                  {Math.round((capture_rate / 255) * 100) + "%"}
                 </Typography>
                 <Typography
                   variant="body1"
@@ -193,32 +197,31 @@ const PokemonDetails = ({ match, history }) => {
                 >
                   {description.flavor_text}
                 </Typography>
-                <Typography gutterBottom>
+
+                {/***********ABILITIES***********/}
+                <Typography style={{ marginBottom: "1rem" }}>
                   <strong>Abilities:</strong>
                 </Typography>
-                <Typography style={{ marginBottom: "1rem" }}>
+                <Grid container spacing={2}>
                   {abilities.map(ability => (
-                    <Button
-                      variant="outlined"
-                      style={{
-                        borderColor: color.name,
-                        color: "white",
-                        marginRight: ".5rem"
-                      }}
-                      aria-label="Pokemon Abilities"
-                      key={ability.ability.name}
-                    >
-                      {ability.ability.name}
-                    </Button>
+                    <Grid item key={ability.ability.name}>
+                      <Button
+                        variant="outlined"
+                        style={{
+                          borderColor: color.name,
+                          color: "white"
+                        }}
+                        aria-label="Pokemon Abilities"
+                      >
+                        {ability.ability.name}
+                      </Button>
+                    </Grid>
                   ))}
-                </Typography>
+                </Grid>
               </CardContent>
             </Card>
           </Grid>
         </Grid>
-        {/******BEGIN CARD FOOTER SECTION******/}
-
-        {/******END CARD FOOTER SECTION******/}
       </Card>
     </div>
   )
