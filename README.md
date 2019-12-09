@@ -1,5 +1,11 @@
 # Poke Team
 
+<div align="center">
+  
+![](https://media.giphy.com/media/gk32fFh2dPKKNtqQvr/giphy.gif)
+
+</div>
+
 ## View, Search & Create the Perfect Pokemon Team
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/e037afe5-efff-44f0-8bc8-d702ccc40d0f/deploy-status)](https://app.netlify.com/sites/poke-team/deploys)
