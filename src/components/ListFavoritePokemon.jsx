@@ -71,12 +71,7 @@ const ListFavoritePokemon = ({ history }) => {
             title="Favorite Pokemon"
           />
           {/*</div>*/}
-          <Grid
-            container
-            {/*style={{
-              marginTop: "3rem"
-            }}*/}
-          >
+          <Grid container>
             {favoritePokemon.length === 0 ? (
               // DISPLAY THIS IF NO POKEMON ARE FAVORITED
               <Grid item style={{ margin: "25%" }}>
