@@ -51,31 +51,31 @@ const ListFavoritePokemon = ({ history }) => {
         }}
       >
         <Card>
-          <div
+          {/*<div
             style={{
               position: "fixed",
               width: "100%",
               zIndex: "9",
               backgroundColor: "rgba(249, 249, 249, 1)"
             }}
-          >
-            <CardHeader
-              action={
-                <IconButton
-                  aria-label="close favorites menu"
-                  onClick={() => history.goBack()}
-                >
-                  <CloseIcon />
-                </IconButton>
-              }
-              title="Favorite Pokemon"
-            />
-          </div>
+          >*/}
+          <CardHeader
+            action={
+              <IconButton
+                aria-label="close favorites menu"
+                onClick={() => history.goBack()}
+              >
+                <CloseIcon />
+              </IconButton>
+            }
+            title="Favorite Pokemon"
+          />
+          {/*</div>*/}
           <Grid
             container
-            style={{
+            {/*style={{
               marginTop: "3rem"
-            }}
+            }}*/}
           >
             {favoritePokemon.length === 0 ? (
               // DISPLAY THIS IF NO POKEMON ARE FAVORITED
