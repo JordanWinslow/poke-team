@@ -114,6 +114,7 @@ const PokemonDetails = ({ match, history }) => {
         <CardActions className={classes.topButtons}>
           <TeamButton
             onTeam={pokeTeam.includes(name)}
+            maxSizeReached={pokeTeam.length === 8}
             onClick={() =>
               pokeTeam.includes(name)
                 ? dispatch(removeFromTeam(name))
