@@ -153,13 +153,11 @@ const PokemonGrid = ({ history, location }) => {
                   <TeamButton
                     onTeam={pokeTeam.includes(p.name)}
                     maxSizeReached={pokeTeam.length === 8}
-                    onClick={() => {
-                      if (pokeTeam.length !== 8) {
-                        pokeTeam.includes(p.name)
-                          ? dispatch(removeFromTeam(p.name))
-                          : dispatch(addToTeam(p.name))
-                      }
-                    }}
+                    onClick={() =>
+                      pokeTeam.includes(p.name)
+                        ? dispatch(removeFromTeam(p.name))
+                        : dispatch(addToTeam(p.name))
+                    }
                   />
                   {/******END CARD FOOTER SECTION******/}
                 </Card>
