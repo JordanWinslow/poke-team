@@ -3,16 +3,27 @@ import Button from "@material-ui/core/Button"
 import AddCircleIcon from "@material-ui/icons/AddCircle"
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle"
 
-const TeamButton = ({ onTeam, onClick }) => {
+const TeamButton = ({ onTeam, onClick, maxSizeReached }) => {
+  console.log(maxSizeReached)
+
   return (
     <Button
+      disabled={onTeam ? false : maxSizeReached}
       variant="text"
       color={onTeam ? "primary" : "secondary"}
       startIcon={onTeam ? <RemoveCircleIcon /> : <AddCircleIcon />}
-      aria-label={onTeam ? "Remove From Team" : "Add to Team"}
+      aria-label={
+        maxSizeReached
+          ? "Max Team Size"
+          : onTeam
+          ? "Remove From Team"
+          : "Add to Team"
+      }
       onClick={onClick}
     >
-      {onTeam // display the button text relating to if this pokemon is already on team or not
+      {maxSizeReached && !onTeam
+        ? "Max Team Size"
+        : onTeam
         ? "Remove From Team"
         : "Add to Team"}
     </Button>

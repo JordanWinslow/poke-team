@@ -37,7 +37,11 @@ const BottomNav = ({ history }) => {
           history.push("/favorites")
         }}
       />
-      <BottomNavigationAction label="Your Team" icon={<QueueIcon />} />
+      <BottomNavigationAction
+        label="Your Team"
+        icon={<QueueIcon />}
+        onClick={() => history.push("/team")}
+      />
     </BottomNavigation>
   )
 }

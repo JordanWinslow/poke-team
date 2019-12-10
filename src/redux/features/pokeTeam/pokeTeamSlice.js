@@ -21,7 +21,10 @@ const pokeTeamSlice = createSlice({
       state.favoritesMenuActive = !state.favoritesMenuActive
     },
     addToTeam(state, action) {
-      state.pokeTeam.push(action.payload) // add the string value of the pokemon's name to the set
+      if (state.pokeTeam.length !== 8) {
+        // 8 pokemon max on a team
+        state.pokeTeam.push(action.payload) // add the string value of the pokemon's name to the set
+      }
     },
     removeFromTeam(state, action) {
       state.pokeTeam.splice(state.pokeTeam.indexOf(action.payload), 1)

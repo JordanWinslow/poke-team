@@ -1,6 +1,8 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 
+import { removeFavoritePokemon } from "../redux/features/pokeTeam/pokeTeamSlice"
+
 import {
   Typography,
   Avatar,
@@ -10,12 +12,9 @@ import {
   Grid,
   Box
 } from "@material-ui/core"
-
 import CloseIcon from "@material-ui/icons/Close"
 
 import FavoriteButton from "../components/FavoriteButton"
-
-import { removeFavoritePokemon } from "../redux/features/pokeTeam/pokeTeamSlice"
 
 import capitalizeFirstLetter from "../util/capitalizeFirstLetter"
 

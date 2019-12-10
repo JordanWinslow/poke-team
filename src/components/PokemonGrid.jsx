@@ -1,6 +1,9 @@
+/******************CORE IMPORTS****************/
 import React, { useEffect } from "react"
 import { InView } from "react-intersection-observer" // to set up infinite scrolling
 import { useSelector, useDispatch } from "react-redux" // useSelector grabs state similar to mapStateToProps
+
+/******************STATE & DISPATCH IMPORTS****************/
 import {
   getFirstRender,
   getMorePokemon
@@ -12,30 +15,34 @@ import {
   removeFromTeam
 } from "../redux/features/pokeTeam/pokeTeamSlice"
 
-import useDebounce from "../util/useDebounce"
-
-import TeamButton from "./TeamButton" // Add and Remove From Team Button
-
-/******************STYLING****************/
+/******************STYLE & THEME IMPORTS****************/
 import { makeStyles } from "@material-ui/core/styles"
-import Box from "@material-ui/core/Box"
-import Grid from "@material-ui/core/Grid"
-import Chip from "@material-ui/core/Chip"
-import Card from "@material-ui/core/Card"
-import CardHeader from "@material-ui/core/CardHeader"
-import CardActionArea from "@material-ui/core/CardActionArea"
-import CardContent from "@material-ui/core/CardContent"
-import CardMedia from "@material-ui/core/CardMedia"
-import Fade from "@material-ui/core/Fade"
-/******************STYLING****************/
+import {
+  Box,
+  Grid,
+  Chip,
+  Card,
+  CardHeader,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Fade
+} from "@material-ui/core"
 
+/******************MODULAR COMPONENT IMPORTS****************/
+import useDebounce from "../util/useDebounce" // Used for infinite scrolling (prevents running more than one API request at a time)
+import TeamButton from "./TeamButton" // Add and Remove From Team Button
+import FavoriteButton from "./FavoriteButton" // Add and Remove From Favorites Button
+
+/******************UTILITIES****************/
 import pokemonTypeColors from "../data/pokemonTypeColors" // for displaying the appropriate bg color for each type
 import capitalizeFirstLetter from "../util/capitalizeFirstLetter"
-import FavoriteButton from "./FavoriteButton"
 
+/******************IMAGES****************/
 import Loading from "../images/Loading.gif"
 import Loading2 from "../images/Loading2.gif"
 
+/******************LOCAL STYLES****************/
 const useStyles = makeStyles({
   card: {
     maxWidth: 400,
@@ -47,10 +54,12 @@ const useStyles = makeStyles({
   }
 })
 
+/******************BEGIN POKEMON GRID COMPONENT****************/
 const PokemonGrid = ({ history, location }) => {
   const dispatch = useDispatch() // Prevents us from having to use mapDispatch & connect
-  // Destructure our state from the Redux store using a hook provided by React-Redux
+
   const {
+    // Destructure our state from the Redux store using a hook provided by React-Redux
     loading,
     pokemon,
     nextFetchLink,
@@ -64,15 +73,13 @@ const PokemonGrid = ({ history, location }) => {
     }
     if (location.state) {
       /* 
-      IF THE USER WAS LOOKING AT POKEMON DETAILS AND THEY CLICK BACK, WE WANT IT TO SCROLL TO THE POKEMON THEY WERE LOOKING AT INSTEAD OF STARTING AT THE TOP OF THE PAGE.
-      BY PASSING AN OBJECT WITH A <Link> COMPONENT INSTEAD OF JUST A PATH, WE CAN SEND THIS COMPONENT THE NAME OF THE POKEMON THEY WERE LOOKING AT.
-      WE CAN THEN USE THAT NAME TO SELECT THE APPROPRIATE ID CORRESPONDING TO THE GRID ITEM WITH THE POKEMON THEY WERE LOOKING AT, AND USE 
-      scrollIntoView() TO AUTOMATICALLY SCROLL THERE!
+      Scroll to position of the pokemon they were just looking at in the details page. When they click the back button,
+      location.state is populated with the name of the pokemon so we may use it to scroll to that element by ID.
       */
       const pokemonLocation = location.state
       document.getElementById(pokemonLocation).scrollIntoView()
     }
-  }, [location.state]) // only run on first render
+  }, []) // array ensures we only run on first render to prevent infinite loops.
 
   const classes = useStyles() // Material UI
 
@@ -81,6 +88,7 @@ const PokemonGrid = ({ history, location }) => {
     dispatch(getMorePokemon(link))
   }, 1000) // prevent 20 API requests by debouncing and dispatch only one API request each time we hit bottom of page
 
+  /******************RENDER****************/
   return (
     <Box
       width="80%"
@@ -144,11 +152,14 @@ const PokemonGrid = ({ history, location }) => {
                   {/******BEGIN CARD FOOTER SECTION******/}
                   <TeamButton
                     onTeam={pokeTeam.includes(p.name)}
-                    onClick={() =>
-                      pokeTeam.includes(p.name)
-                        ? dispatch(removeFromTeam(p.name))
-                        : dispatch(addToTeam(p.name))
-                    }
+                    maxSizeReached={pokeTeam.length === 8}
+                    onClick={() => {
+                      if (pokeTeam.length !== 8) {
+                        pokeTeam.includes(p.name)
+                          ? dispatch(removeFromTeam(p.name))
+                          : dispatch(addToTeam(p.name))
+                      }
+                    }}
                   />
                   {/******END CARD FOOTER SECTION******/}
                 </Card>
