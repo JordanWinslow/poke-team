@@ -22,4 +22,4 @@
 </ul>
 
 
-This project is a work in progress! The Search & "Your Team" buttons do not do anything yet.
+This project is a work in progress! The "Your Team" component is unfinished and the Search button does not do anything yet.
