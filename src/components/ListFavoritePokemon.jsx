@@ -47,7 +47,7 @@ const ListFavoritePokemon = ({ history }) => {
           position: "fixed",
           zIndex: "999",
           width: "100%",
-          marginTop: "1rem"
+          marginTop: window.innerWidth < 600 ? "0" : "1rem"
         }}
       >
         <Card>
