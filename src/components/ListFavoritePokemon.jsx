@@ -39,26 +39,18 @@ const ListFavoritePokemon = ({ history }) => {
       }}
     >
       <Grid
-        id="FavoritesList"
         item
         sm={12}
         md={8}
         lg={6}
         style={{
-          overflowY: "scroll",
-          margin: "3rem 0",
-          boxShadow: "0 0px 20px rgba(0, 0, 0, 0.5)"
+          position: "fixed",
+          zIndex: "999",
+          width: "100%",
+          marginTop: "1rem"
         }}
       >
         <Card>
-          {/*<div
-            style={{
-              position: "fixed",
-              width: "100%",
-              zIndex: "9",
-              backgroundColor: "rgba(249, 249, 249, 1)"
-            }}
-          >*/}
           <CardHeader
             action={
               <IconButton
@@ -70,6 +62,21 @@ const ListFavoritePokemon = ({ history }) => {
             }
             title="Favorite Pokemon"
           />
+        </Card>
+      </Grid>
+      <Grid
+        id="FavoritesList"
+        item
+        sm={12}
+        md={8}
+        lg={6}
+        style={{
+          overflowY: "scroll",
+          margin: window.innerWidth < 600 ? "4rem 0 0 0" : "5rem 0 2rem 0",
+          boxShadow: "0 0px 20px rgba(0, 0, 0, 0.5)"
+        }}
+      >
+        <Card>
           {/*</div>*/}
           <Grid container>
             {favoritePokemon.length === 0 ? (
