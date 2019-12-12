@@ -18,8 +18,8 @@
 <li><b>Persistent State on Refresh/Reboot</b> (redux-persist + localforage & indexedDB)</li>
 <li><b>Fully Responsive & Dynamic Design</b> (Inline CSS3, Custom Built MaterialUI Theme)</li>
 <li><b>Clean Readable Reducer Logic & Redux DevTools Integration</b> (immer: immutable state written with mutable nomenclature, @redux/toolkit)</li>
-<li>No Fragile Base Class Problem</b> (Coded with Functional OOP in mind. No class inheritance. Utilizes concatenative and prototypal inheritance)</li>
-<li>Original Theme Design & Vector Logo</b> (Logo created in Figma. Design built on top of MaterialUI)</li>
+<li><b>No Fragile Base Class Problem</b> (Coded with Functional OOP in mind. No class inheritance. Utilizes concatenative and prototypal inheritance)</li>
+<li><b>Original Theme Design & Vector Logo</b> (Logo created in Figma. Design built on top of MaterialUI)</li>
 
 
 This project is a work in progress! The "Your Team" component is still being designed and the Search button has not been implemented yet (though the debounce input has been coded).
