@@ -13,13 +13,13 @@
 ## Features
 
 <ul>
-  <li>Over 900 Pages of Info Intelligently Mapped With React-Router</li>
-  <li>Modern Cutting Edge Redux With Simplified, Easily-Readable Code Using @reduxjs/toolkit</li>
-  <li>All Data is Cached & Remembered Even After Computer is Turned Off With Redux-Persist & LocalForage / IndexedDB</li>
-  <li>Infinite Scrolling</li>
-  <li>Responsive Design Adapts to any Screen Size</li>
-  <li>Elegant, Customized Branding & Design Built on Top of MaterialUI</li>
-</ul>
+  <li><b>Over 900 Pages of Data Mapped With Dynamically-Changing Color Theme</b> (fetch, redux-thunk, async/await, react-router-dom)</li>
+<li><b>Scroll-Triggered Asynchronous API Requests</b> (intersection observer + redux-thunk + react-redux hooks)</li>
+<li><b>Persistent State on Refresh/Reboot</b> (redux-persist + localforage & indexedDB)</li>
+<li><b>Fully Responsive & Dynamic Design</b> (Inline CSS3, Custom Built MaterialUI Theme)</li>
+<li><b>Clean Readable Reducer Logic & Redux DevTools Integration</b> (immer: immutable state written with mutable nomenclature, @redux/toolkit)</li>
+<li>No Fragile Base Class Problem</b> (Coded with Functional OOP in mind. No class inheritance. Utilizes concatenative and prototypal inheritance)</li>
+<li>Original Theme Design & Vector Logo</b> (Logo created in Figma. Design built on top of MaterialUI)</li>
 
 
-This project is a work in progress! The "Your Team" component is unfinished and the Search button does not do anything yet.
+This project is a work in progress! The "Your Team" component is still being designed and the Search button has not been implemented yet (though the debounce input has been coded).
